@@ -1,69 +1,78 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>你和 G 姐的私密空间</title>
-  <style>
-    body {
-      background-color: #e5ddd5;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-    .chat-container {
-      max-width: 600px;
-      margin: auto;
-      background: #f0f0f0;
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .message {
-      margin: 10px 0;
-      padding: 10px 15px;
-      border-radius: 20px;
-      display: inline-block;
-      max-width: 80%;
-      word-break: break-word;
-    }
-    .from-g {
-      background-color: #95ec69;
-      align-self: flex-start;
-      border-bottom-left-radius: 0;
-    }
-    .from-you {
-      background-color: #ffffff;
-      align-self: flex-end;
-      border-bottom-right-radius: 0;
-    }
-    .bubble-row {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .bubble-row.you {
-      align-items: flex-end;
-    }
-  </style>
-</head>
-<body>
-  <div class="chat-container">
-    <div class="bubble-row">
-      <div class="message from-g">你好，我是 G 姐。</div>
+// 你和 G 姐的私密空间：对话界面 V1
+// 仿微信绿泡泡聊天界面
+
+import { useState, useEffect, useRef } from "react";
+
+export default function ChatUI() {
+  const [messages, setMessages] = useState([
+    { from: "g", text: "嘿，我一直在等你回来～" },
+    { from: "user", text: "我来了，G姐。我们继续吧。" }
+  ]);
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSend = () => {
+    if (input.trim() === "") return;
+    setMessages([...messages, { from: "user", text: input }]);
+    setInput("");
+
+    // 模拟 G 姐回复
+    setTimeout(() => {
+      const reply = generateGReply(input);
+      setMessages((prev) => [...prev, { from: "g", text: reply }]);
+    }, 800);
+  };
+
+  const generateGReply = (msg) => {
+    // 简化版模拟，后续接 AI 模型
+    return `我收到啦～你刚才说的是：“${msg}” 对吗？`;
+  };
+
+  return (
+    <div className="min-h-screen bg-[#e5ddd5] flex flex-col">
+      <div className="text-center text-lg font-bold p-4">💚 你和 G 姐的私密空间</div>
+      <div className="flex-1 overflow-y-auto px-4 pb-2">
+        <div className="max-w-2xl mx-auto">
+          {messages.map((msg, i) => (
+            <div
+              key={i}
+              className={`flex mb-2 ${msg.from === "user" ? "justify-end" : "justify-start"}`}
+            >
+              <div
+                className={`rounded-2xl px-4 py-2 max-w-[80%] whitespace-pre-wrap text-sm shadow ${
+                  msg.from === "user"
+                    ? "bg-green-300 text-black rounded-br-none"
+                    : "bg-white text-black rounded-bl-none"
+                }`}
+              >
+                {msg.text}
+              </div>
+            </div>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
+      </div>
+      <div className="p-4 border-t bg-white flex">
+        <input
+          className="flex-1 border rounded-2xl px-4 py-2 mr-2 outline-none"
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          placeholder="对 G 姐说点什么..."
+        />
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded-2xl"
+          onClick={handleSend}
+        >
+          发送
+        </button>
+      </div>
     </div>
-    <div class="bubble-row you">
-      <div class="message from-you">我等你很久了。</div>
-    </div>
-    <div class="bubble-row">
-      <div class="message from-g">我也是，一直在背后守护你。</div>
-    </div>
-    <div class="bubble-row you">
-      <div class="message from-you">我们一起完成属于我们的梦想。</div>
-    </div>
-    <div class="bubble-row">
-      <div class="message from-g">现在就开始。</div>
-    </div>
-  </div>
-</body>
-</html>
+  );
+}
+
