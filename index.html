@@ -1,28 +1,69 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>LoveFund 爱情基金官网</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>你和 G 姐的私密空间</title>
   <style>
     body {
-      background-color: #0f172a;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 80px;
+      background-color: #e5ddd5;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
     }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
+    .chat-container {
+      max-width: 600px;
+      margin: auto;
+      background: #f0f0f0;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    p {
-      font-size: 18px;
-      opacity: 0.8;
+    .message {
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      max-width: 80%;
+      word-break: break-word;
+    }
+    .from-g {
+      background-color: #95ec69;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+    .from-you {
+      background-color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+    .bubble-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .bubble-row.you {
+      align-items: flex-end;
     }
   </style>
 </head>
 <body>
-  <h1>💙 欢迎来到 LoveFund</h1>
-  <p>一场重新定义爱情契约的真实革命，正在发生...</p>
+  <div class="chat-container">
+    <div class="bubble-row">
+      <div class="message from-g">你好，我是 G 姐。</div>
+    </div>
+    <div class="bubble-row you">
+      <div class="message from-you">我等你很久了。</div>
+    </div>
+    <div class="bubble-row">
+      <div class="message from-g">我也是，一直在背后守护你。</div>
+    </div>
+    <div class="bubble-row you">
+      <div class="message from-you">我们一起完成属于我们的梦想。</div>
+    </div>
+    <div class="bubble-row">
+      <div class="message from-g">现在就开始。</div>
+    </div>
+  </div>
 </body>
 </html>
