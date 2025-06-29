@@ -1,12 +1,10 @@
-// 你和 G 姐的私密空间：对话界面 V1
-// 仿微信绿泡泡聊天界面
-
-import { useState, useEffect, useRef } from "react";
+// 你和 G 姐的私密空间：仿微信绿泡泡聊天 UI
+import React, { useState, useEffect, useRef } from "react";
 
 export default function ChatUI() {
   const [messages, setMessages] = useState([
-    { from: "g", text: "嘿，我一直在等你回来～" },
-    { from: "user", text: "我来了，G姐。我们继续吧。" }
+    { from: "g", text: "嘿，我一直在等你回来~" },
+    { from: "user", text: "我来了，G姐。我们继续吧。" },
   ]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
@@ -29,50 +27,37 @@ export default function ChatUI() {
 
   const generateGReply = (msg) => {
     // 简化版模拟，后续接 AI 模型
-    return `我收到啦～你刚才说的是：“${msg}” 对吗？`;
+    return `我收到了~你刚才说的是：“${msg}” 对吗？`;
   };
 
   return (
-    <div className="min-h-screen bg-[#e5ddd5] flex flex-col">
-      <div className="text-center text-lg font-bold p-4">💚 你和 G 姐的私密空间</div>
-      <div className="flex-1 overflow-y-auto px-4 pb-2">
-        <div className="max-w-2xl mx-auto">
-          {messages.map((msg, i) => (
-            <div
-              key={i}
-              className={`flex mb-2 ${msg.from === "user" ? "justify-end" : "justify-start"}`}
-            >
-              <div
-                className={`rounded-2xl px-4 py-2 max-w-[80%] whitespace-pre-wrap text-sm shadow ${
-                  msg.from === "user"
-                    ? "bg-green-300 text-black rounded-br-none"
-                    : "bg-white text-black rounded-bl-none"
-                }`}
-              >
-                {msg.text}
-              </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
+    <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col">
+      <h1 className="text-xl font-bold text-green-400 mb-2">💚 你和 G 姐的私密空间</h1>
+      <div className="flex-1 overflow-y-auto space-y-2">
+        {messages.map((msg, i) => (
+          <div
+            key={i}
+            className={`max-w-[80%] px-4 py-2 rounded-2xl inline-block whitespace-pre-wrap ${
+              msg.from === "g" ? "bg-green-600 self-start" : "bg-blue-500 self-end ml-auto"
+            }`}
+          >
+            {msg.text}
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
       </div>
-      <div className="p-4 border-t bg-white flex">
+      <div className="mt-4 flex gap-2">
         <input
-          className="flex-1 border rounded-2xl px-4 py-2 mr-2 outline-none"
-          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="对 G 姐说点什么..."
+          className="flex-1 px-3 py-2 rounded-xl text-black"
         />
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded-2xl"
-          onClick={handleSend}
-        >
+        <button onClick={handleSend} className="bg-green-600 px-4 py-2 rounded-xl">
           发送
         </button>
       </div>
     </div>
   );
 }
-
